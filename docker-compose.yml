@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  collector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/k4czp3r/server-stats-reporter:latest-collector
+    environment:
+      - NODENAME='{{.Node.Hostname}}'
+    volumes:
+      - ./data:/app/database
+  apirepoter:
+    build:
+      context: .
+      dockerfile: Dockerfile.reporter
+        image: ghcr.io/k4czp3r/server-stats-reporter:latest-reporter
+    volumes:
+      - ./data:/app/database
+    ports:
+      - "8080:8000"

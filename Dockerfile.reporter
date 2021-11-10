@@ -1,0 +1,11 @@
+FROM python:3.7-alpine
+
+WORKDIR /app
+
+RUN pip install falcon gunicorn
+
+COPY reporter.py .
+
+RUN mkdir database
+
+CMD ["gunicorn", "reporter:api", "--bind=0.0.0.0"]
